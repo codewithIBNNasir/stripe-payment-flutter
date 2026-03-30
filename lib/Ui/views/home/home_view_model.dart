@@ -24,7 +24,7 @@ class PaymentViewModel extends BaseViewModel {
     notifyListeners();
 
     try {
-      // Step 1: Get clientSecret from backend
+      
       final clientSecret = await _stripeService.createPaymentIntent(
         amount: amount,
         currency: currency,
@@ -36,10 +36,10 @@ class PaymentViewModel extends BaseViewModel {
         return;
       }
 
-      // Step 2: Init payment sheet
+     
       await _stripeService.initPaymentSheet(clientSecret);
 
-      // Step 3: Present payment sheet
+      
       final success = await _stripeService.presentPaymentSheet();
 
       _paymentSuccess = success;

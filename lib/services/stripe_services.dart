@@ -8,18 +8,14 @@ import 'dart:convert';
 
 class StripeService {
 
-  // ✅ Apni real publishable key daalo
-    static final String _publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 
-  // ⚠️ Sirf testing ke liye — production mein yahan secret key mat rakhna!
+    static final String _publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
   static final String _secretKey = dotenv.env['STRIPE_SECRET_KEY'] ?? '';
   // Call this once in main.dart
   static void init() {
     Stripe.publishableKey = _publishableKey;
     Stripe.instance.applySettings();
   }
-
-  /// Direct Stripe call — no backend needed (testing only)
   Future<String?> createPaymentIntent({
     required int amount,
     required String currency,
@@ -40,7 +36,7 @@ class StripeService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['client_secret']; // ✅ note: client_secret not clientSecret
+        return data['client_secret']; //
       } else {
         debugPrint('Stripe error: ${response.body}');
         return null;
@@ -78,8 +74,6 @@ class StripeService {
       ),
     );
   }
-
-  /// Present the payment sheet
   Future<bool> presentPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet();
@@ -93,7 +87,6 @@ class StripeService {
     }
   }
 
-  /// All in one — called from ViewModel
   Future<bool> processPayment({
     required int amount,
     required String currency,

@@ -8,13 +8,10 @@ import 'package:stripe_payment/services/stripe_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // ✅ Load .env file first
+
   await dotenv.load(fileName: ".env");
-  
-  // ✅ Publishable key now comes from .env (not hardcoded)
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-  
+
   await setupLocator();
   StripeService.init();
   runApp(MyApp());
